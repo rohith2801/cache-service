@@ -1,7 +1,9 @@
 package com.tihor.practice.service;
 
+import com.tihor.practice.exception.KeyNotFoundException;
 import com.tihor.practice.model.Data;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -48,7 +50,11 @@ public class CacheService {
      *
      * @param request the request
      */
-    public void saveData(final Data request) {
+    public void saveData(final Data request) throws KeyNotFoundException {
+        if (StringUtils.isEmpty(request.getKey())) {
+            throw new KeyNotFoundException("Key cannot be null");
+        }
+
         this.saveData(request.getKey(), request.getValue());
     }
 

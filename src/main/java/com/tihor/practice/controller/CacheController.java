@@ -1,6 +1,8 @@
 package com.tihor.practice.controller;
 
+import com.tihor.practice.exception.KeyNotFoundException;
 import com.tihor.practice.model.Data;
+import com.tihor.practice.model.Error;
 import com.tihor.practice.service.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +40,15 @@ public class CacheController {
      */
     @PostMapping("/cache")
     public ResponseEntity saveData(@RequestBody final Data request) {
-        cacheService.saveData(request);
+        try {
+            cacheService.saveData(request);
+        } catch (KeyNotFoundException exception) {
+            final Integer errorCode = 2001; // @TODO hardcoded for now. Need to think off how to use this.
+            Error error = new Error(errorCode, exception.getMessage());
+
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity(HttpStatus.OK);
     }
 
