@@ -26,6 +26,13 @@ public class Error {
     }
 
     /**
+     * Instantiates a new Error.
+     */
+    Error() {
+
+    }
+
+    /**
      * Gets code.
      *
      * @return the code

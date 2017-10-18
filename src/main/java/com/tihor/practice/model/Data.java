@@ -26,6 +26,12 @@ public class Data {
     }
 
     /**
+     * Instantiates a new Data.
+     */
+    Data() {
+    }
+
+    /**
      * Gets key.
      *
      * @return the key
